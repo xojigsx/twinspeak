@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "FunctionCall.json",
+  "title": "Function Call",
+  "description": "Function/tool invocation from server",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "function_call"
+    },
+    "name": {
+      "type": "string",
+      "description": "Name of the function to call"
+    },
+    "callId": {
+      "type": "string",
+      "description": "Unique identifier for the function call"
+    },
+    "arguments": {
+      "type": "object",
+      "description": "Arguments to pass to the function",
+      "additionalProperties": true
+    }
+  },
+  "required": ["type", "name", "callId", "arguments"],
+  "additionalProperties": false
+}

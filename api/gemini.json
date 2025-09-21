@@ -1,0 +1,154 @@
+{
+  "asyncapi": "3.0.0",
+  "info": {
+    "title": "Twinspeak Gemini Live API",
+    "version": "1.0.0",
+    "description": "Drop-in replacement for Google's Gemini Live API providing real-time conversational AI capabilities over WebSocket connections"
+  },
+  "servers": {
+    "development": {
+      "host": "localhost:8080",
+      "protocol": "ws",
+      "description": "Development server"
+    }
+  },
+  "channels": {
+    "/v1/speak": {
+      "address": "/v1/speak",
+      "messages": {
+        "SetupRequest": {
+          "$ref": "#/components/messages/SetupRequest"
+        },
+        "ClientInputText": {
+          "$ref": "#/components/messages/ClientInputText"
+        },
+        "ClientInputAudio": {
+          "$ref": "#/components/messages/ClientInputAudio"
+        },
+        "ToolResult": {
+          "$ref": "#/components/messages/ToolResult"
+        },
+        "SessionEnd": {
+          "$ref": "#/components/messages/SessionEnd"
+        },
+        "ServerOutputText": {
+          "$ref": "#/components/messages/ServerOutputText"
+        },
+        "ServerOutputAudio": {
+          "$ref": "#/components/messages/ServerOutputAudio"
+        },
+        "FunctionCall": {
+          "$ref": "#/components/messages/FunctionCall"
+        },
+        "SessionResumptionUpdate": {
+          "$ref": "#/components/messages/SessionResumptionUpdate"
+        },
+        "Error": {
+          "$ref": "#/components/messages/Error"
+        }
+      }
+    }
+  },
+  "operations": {
+    "sendMessage": {
+      "action": "send",
+      "channel": {
+        "$ref": "#/channels/~1v1~1speak"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/SetupRequest"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/ClientInputText"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/ClientInputAudio"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/ToolResult"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/SessionEnd"
+        }
+      ]
+    },
+    "receiveMessage": {
+      "action": "receive",
+      "channel": {
+        "$ref": "#/channels/~1v1~1speak"
+      },
+      "messages": [
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/ServerOutputText"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/ServerOutputAudio"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/FunctionCall"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/SessionResumptionUpdate"
+        },
+        {
+          "$ref": "#/channels/~1v1~1speak/messages/Error"
+        }
+      ]
+    }
+  },
+  "components": {
+    "messages": {
+      "SetupRequest": {
+        "payload": {
+          "$ref": "models/gemini/SetupRequest.json"
+        }
+      },
+      "ClientInputText": {
+        "payload": {
+          "$ref": "models/gemini/ClientInputText.json"
+        }
+      },
+      "ClientInputAudio": {
+        "payload": {
+          "$ref": "models/gemini/ClientInputAudio.json"
+        }
+      },
+      "ToolResult": {
+        "payload": {
+          "$ref": "models/gemini/ToolResult.json"
+        }
+      },
+      "SessionEnd": {
+        "payload": {
+          "$ref": "models/gemini/SessionEnd.json"
+        }
+      },
+      "ServerOutputText": {
+        "payload": {
+          "$ref": "models/gemini/ServerOutputText.json"
+        }
+      },
+      "ServerOutputAudio": {
+        "payload": {
+          "$ref": "models/gemini/ServerOutputAudio.json"
+        }
+      },
+      "FunctionCall": {
+        "payload": {
+          "$ref": "models/gemini/FunctionCall.json"
+        }
+      },
+      "SessionResumptionUpdate": {
+        "payload": {
+          "$ref": "models/gemini/SessionResumptionUpdate.json"
+        }
+      },
+      "Error": {
+        "payload": {
+          "$ref": "models/gemini/Error.json"
+        }
+      }
+    }
+  }
+}

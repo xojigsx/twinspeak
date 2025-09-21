@@ -1,0 +1,28 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ServerOutputAudio.json",
+  "title": "Server Output Audio",
+  "description": "Audio output message from server",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "output_audio"
+    },
+    "format": {
+      "type": "string",
+      "enum": ["wav", "pcm16", "opus"],
+      "description": "Audio format"
+    },
+    "chunk": {
+      "type": "string",
+      "description": "Base64-encoded audio data chunk"
+    },
+    "final": {
+      "type": "boolean",
+      "description": "Whether this is the final chunk in the audio stream"
+    }
+  },
+  "required": ["type", "format", "chunk", "final"],
+  "additionalProperties": false
+}

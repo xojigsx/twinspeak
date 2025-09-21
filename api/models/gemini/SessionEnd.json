@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "SessionEnd.json",
+  "title": "Session End",
+  "description": "Session termination message",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "end_session"
+    },
+    "reason": {
+      "type": "string",
+      "description": "Reason for ending the session"
+    }
+  },
+  "required": ["type", "reason"],
+  "additionalProperties": false
+}

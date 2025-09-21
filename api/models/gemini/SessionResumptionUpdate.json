@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "SessionResumptionUpdate.json",
+  "title": "Session Resumption Update",
+  "description": "Session resumption token message",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "session_resumption_update"
+    },
+    "handle": {
+      "type": "string",
+      "description": "Resumption handle for session continuity"
+    }
+  },
+  "required": ["type", "handle"],
+  "additionalProperties": false
+}

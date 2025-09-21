@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Model Schema Sync",
+  "description": "When new model JSONSchema is added to the api/model/{type} directory, ensure there is a matching pkg/model/{type} generated and the models are synced.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      "api/model/*/*.json"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A new JSON schema has been added to the API models directory. Please ensure there is a corresponding pkg/model/{type} directory structure and regenerate the Go models using the code generation tools. Run 'make gen' or 'go generate ./pkg/model' to update the generated Go structs from the JSON schemas."
+  }
+}

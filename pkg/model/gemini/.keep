@@ -1,0 +1,2 @@
+# This file ensures the gemini directory exists for code generation
+# Generated Go structs will be placed in this directory

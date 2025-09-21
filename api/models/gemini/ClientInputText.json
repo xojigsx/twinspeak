@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ClientInputText.json",
+  "title": "Client Input Text",
+  "description": "Text input message from client",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "input_text"
+    },
+    "text": {
+      "type": "string",
+      "description": "The text content"
+    },
+    "turnId": {
+      "type": "string",
+      "description": "Optional turn identifier for conversation tracking"
+    }
+  },
+  "required": ["type", "text"],
+  "additionalProperties": false
+}

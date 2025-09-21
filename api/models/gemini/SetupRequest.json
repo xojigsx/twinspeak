@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "SetupRequest.json",
+  "title": "Setup Request",
+  "description": "Initial session configuration message",
+  "type": "object",
+  "properties": {
+    "type": {
+      "type": "string",
+      "const": "setup"
+    },
+    "model": {
+      "type": "string",
+      "description": "The model to use for the session"
+    },
+    "sessionConfig": {
+      "type": "object",
+      "description": "Optional session configuration parameters",
+      "additionalProperties": true
+    }
+  },
+  "required": ["type", "model"],
+  "additionalProperties": false
+}
