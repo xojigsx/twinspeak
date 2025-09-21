@@ -1,0 +1,114 @@
+run:
+  timeout: 5m
+  issues-exit-code: 1
+  tests: true
+  skip-dirs:
+    - vendor
+  skip-files:
+    - ".*\\.gen\\.go$"
+
+output:
+  format: colored-line-number
+  print-issued-lines: true
+  print-linter-name: true
+
+linters-settings:
+  govet:
+    check-shadowing: true
+  gocyclo:
+    min-complexity: 15
+  dupl:
+    threshold: 100
+  goconst:
+    min-len: 3
+    min-occurrences: 3
+  misspell:
+    locale: US
+  lll:
+    line-length: 120
+  goimports:
+    local-prefixes: jig.sx/twinspeak
+  funlen:
+    lines: 100
+    statements: 50
+  godox:
+    keywords:
+      - NOTE
+      - OPTIMIZE
+      - HACK
+  gosec:
+    severity: "low"
+    confidence: "low"
+    excludes:
+      - G304
+  nakedret:
+    max-func-lines: 30
+  nestif:
+    min-complexity: 4
+  nolintlint:
+    allow-leading-space: true
+    allow-unused: false
+    require-explanation: false
+    require-specific: false
+  prealloc:
+    simple: true
+    range-loops: true
+    for-loops: false
+  revive:
+    min-confidence: 0
+  unparam:
+    check-exported: false
+  unused:
+    check-exported: false
+  whitespace:
+    multi-if: false
+    multi-func: false
+
+linters:
+  disable-all: true
+  enable:
+    - errcheck
+    - gosimple
+    - govet
+    - ineffassign
+    - staticcheck
+    - typecheck
+    - unused
+    - gofmt
+    - goimports
+    - misspell
+    - goconst
+    - gocyclo
+    - gosec
+    - dupl
+    - funlen
+    - godox
+    - lll
+    - nakedret
+    - nestif
+    - nolintlint
+    - prealloc
+    - revive
+    - unparam
+    - whitespace
+
+issues:
+  exclude-rules:
+    - path: _test\.go
+      linters:
+        - funlen
+        - goconst
+        - gocyclo
+        - errcheck
+        - dupl
+        - gosec
+    - path: main\.go
+      linters:
+        - funlen
+    - linters:
+        - lll
+      source: "^//go:generate "
+  exclude-use-default: false
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  new: false

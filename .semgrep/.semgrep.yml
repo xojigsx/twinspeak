@@ -1,0 +1,16 @@
+rules:
+  - id: semgrep-go-rules
+    patterns:
+      - pattern-either:
+          - patterns:
+              - pattern: |
+                  import "$IMPORT"
+              - metavariable-regex:
+                  metavariable: $IMPORT
+                  regex: ^(fmt|log|os)$
+    message: Using basic Go packages
+    languages: [go]
+    severity: INFO
+
+extends:
+  - .semgrep/semgrep-go/

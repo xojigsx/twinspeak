@@ -28,7 +28,7 @@ func NewSession(model string) *Session {
 		State:     StateConnecting,
 		CreatedAt: now,
 		UpdatedAt: now,
-		Log:       make([]any, 0),
+		Log:       []any{},
 	}
 }
 

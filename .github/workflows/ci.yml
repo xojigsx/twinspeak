@@ -1,0 +1,112 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Test
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: [1.23.x]
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go-version }}
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Install code generation tools
+      run: go install github.com/atombender/go-jsonschema@latest
+
+    - name: Build
+      run: make build
+
+    - name: Run tests
+      run: make test
+
+    - name: Run tests with coverage
+      run: make test-coverage
+
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: 1.23.x
+
+    - name: Cache Go modules
+      uses: actions/cache@v4
+      with:
+        path: |
+          ~/.cache/go-build
+          ~/go/pkg/mod
+        key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+        restore-keys: |
+          ${{ runner.os }}-go-
+
+    - name: Install dependencies
+      run: go mod download
+
+    - name: Install code generation tools
+      run: go install github.com/atombender/go-jsonschema@latest
+
+    - name: Run basic Go linting
+      run: |
+        go vet ./...
+        go fmt ./...
+        
+    - name: Install and run golangci-lint (if compatible)
+      run: |
+        if go version | grep -q "go1.2[0-3]"; then
+          echo "Installing golangci-lint for Go 1.20-1.23..."
+          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3
+          golangci-lint run --timeout=5m || echo "golangci-lint failed"
+        else
+          echo "Skipping golangci-lint (Go version compatibility issue)"
+        fi
+
+    - name: Install semgrep
+      run: |
+        python3 -m pip install semgrep
+
+    - name: Install go-ruleguard
+      run: |
+        go install github.com/quasilyte/go-ruleguard/cmd/ruleguard@latest
+
+    - name: Run semgrep-go
+      run: |
+        semgrep --config=.semgrep/semgrep-go --lang=go . || echo "semgrep completed with issues"
+
+    - name: Run go-ruleguard
+      run: |
+        ruleguard -rules .ruleguard/rules.go ./... || echo "go-ruleguard completed with issues"

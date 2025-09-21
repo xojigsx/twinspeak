@@ -2,9 +2,11 @@
 
 package gemini
 
-import "encoding/json"
-import "fmt"
-import "reflect"
+import (
+	"encoding/json"
+	"fmt"
+	"reflect"
+)
 
 // Audio input message from client
 type ClientInputAudioJson struct {

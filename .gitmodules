@@ -1,0 +1,3 @@
+[submodule ".semgrep/semgrep-go"]
+	path = .semgrep/semgrep-go
+	url = https://github.com/dgryski/semgrep-go.git

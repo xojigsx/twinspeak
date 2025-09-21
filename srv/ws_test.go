@@ -12,6 +12,7 @@ import (
 
 	"github.com/gobwas/ws"
 	"github.com/gobwas/ws/wsutil"
+
 	g "jig.sx/twinspeak/pkg/model/gemini"
 )
 
