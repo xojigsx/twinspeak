@@ -2,19 +2,17 @@ run:
   timeout: 5m
   issues-exit-code: 1
   tests: true
-  skip-dirs:
-    - vendor
-  skip-files:
-    - ".*\\.gen\\.go$"
 
 output:
-  format: colored-line-number
+  formats:
+    - format: colored-line-number
   print-issued-lines: true
   print-linter-name: true
 
 linters-settings:
   govet:
-    check-shadowing: true
+    enable-all: true
+    shadow: true
   gocyclo:
     min-complexity: 15
   dupl:
@@ -93,6 +91,10 @@ linters:
     - whitespace
 
 issues:
+  exclude-files:
+    - ".*\\.gen\\.go$"
+  exclude-dirs:
+    - vendor
   exclude-rules:
     - path: _test\.go
       linters:

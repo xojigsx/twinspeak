@@ -1,3 +1,4 @@
+// Package main provides the Twinspeak server executable.
 package main
 
 import (
@@ -5,6 +6,7 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/spf13/cobra"
 
@@ -17,15 +19,21 @@ var (
 
 var rootCmd = &cobra.Command{
 	Use:   "twinspeak",
-	Short: "Twinspeak - A drop-in replacement for Google's Gemini Live API",
-	Long:  `Twinspeak provides real-time conversational AI capabilities over WebSocket connections, compatible with Google's Gemini Live API.`,
-	Run: func(cmd *cobra.Command, args []string) {
+	Short: "Twinspeak - Real-time conversational AI over WebSocket connections",
+	Long: `Twinspeak provides real-time conversational AI capabilities over WebSocket connections ` +
+		`with support for text and audio communication.`,
+	Run: func(_ *cobra.Command, _ []string) {
 		server := srv.New()
 
 		fmt.Printf("Starting Twinspeak server on %s\n", addr)
 		log.Printf("Server listening on %s", addr)
 
-		if err := http.ListenAndServe(addr, server.Handler()); err != nil {
+		httpServer := &http.Server{
+			Addr:              addr,
+			Handler:           server.Handler(),
+			ReadHeaderTimeout: 30 * time.Second,
+		}
+		if err := httpServer.ListenAndServe(); err != nil {
 			log.Fatalf("Server failed to start: %v", err)
 		}
 	},

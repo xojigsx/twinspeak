@@ -1,9 +1,9 @@
 {
   "asyncapi": "3.0.0",
   "info": {
-    "title": "Twinspeak Gemini Live API",
+    "title": "Twinspeak WebSocket API",
     "version": "1.0.0",
-    "description": "Drop-in replacement for Google's Gemini Live API providing real-time conversational AI capabilities over WebSocket connections"
+    "description": "Real-time conversational AI capabilities over WebSocket connections with multi-modal support"
   },
   "servers": {
     "development": {

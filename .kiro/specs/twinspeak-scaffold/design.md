@@ -2,7 +2,7 @@
 
 ## Overview
 
-Twinspeak is architected as a modular Go application that provides a drop-in replacement for Google's Gemini Live API. The system follows a layered architecture with clear separation between API specification, code generation, session management, and WebSocket handling. The design emphasizes type safety through code generation, high-performance WebSocket communication, and stateful session management.
+Twinspeak is architected as a modular Go application that provides real-time conversational AI capabilities. The system follows a layered architecture with clear separation between API specification, code generation, session management, and WebSocket handling. The design emphasizes type safety through code generation, high-performance WebSocket communication, and stateful session management.
 
 ## Architecture
 
@@ -79,7 +79,7 @@ const (
 - Message envelope pattern with type-based routing
 - Session state validation
 - Error handling and client communication
-- Protocol compliance with Gemini Live API
+- Protocol compliance with WebSocket API specification
 
 ### 5. CLI Interface
 

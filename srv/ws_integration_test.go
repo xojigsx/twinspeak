@@ -287,9 +287,9 @@ func TestSessionStateTransitions(t *testing.T) {
 func TestInvalidMessageFormats(t *testing.T) {
 	tests := []struct {
 		name         string
-		setupFirst   bool
 		message      string
 		expectedCode string
+		setupFirst   bool
 	}{
 		{
 			name:         "Missing required field in setup",
@@ -350,9 +350,9 @@ func TestInvalidMessageFormats(t *testing.T) {
 					Model: "gemini-1.5-flash",
 				}
 
-				data, err := json.Marshal(setupReq)
-				if err != nil {
-					t.Fatalf("Failed to marshal setup request: %v", err)
+				data, marshalErr := json.Marshal(setupReq)
+				if marshalErr != nil {
+					t.Fatalf("Failed to marshal setup request: %v", marshalErr)
 				}
 
 				err = wsutil.WriteClientMessage(conn, ws.OpText, data)
@@ -459,8 +459,7 @@ func TestHealthEndpoint(t *testing.T) {
 		t.Errorf("Expected Content-Type application/json, got %s", contentType)
 	}
 
-	var body []byte
-	body = make([]byte, 1024)
+	body := make([]byte, 1024)
 	n, _ := resp.Body.Read(body)
 	bodyStr := string(body[:n])
 

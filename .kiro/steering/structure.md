@@ -46,7 +46,7 @@ twinspeak/
 
 ### Naming Patterns
 - **Sessions**: Use UUID-based IDs with type `session.ID`
-- **Message Types**: Follow Gemini Live API naming (e.g., `setup`, `input_text`, `output_audio`)
+- **Message Types**: Use descriptive naming (e.g., `setup`, `input_text`, `output_audio`)
 - **State Management**: Explicit state machine with `session.State` enum
 - **WebSocket Messages**: JSON envelope pattern with `type` field for routing
 

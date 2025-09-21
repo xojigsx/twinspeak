@@ -1,3 +1,4 @@
+// Package srv provides the HTTP server implementation for Twinspeak.
 package srv
 
 import (
@@ -9,11 +10,13 @@ import (
 	"jig.sx/twinspeak/pkg/session"
 )
 
+// Server represents the HTTP server with session management.
 type Server struct {
 	Store *session.Store
 	mux   *chi.Mux
 }
 
+// New creates a new server instance with configured routes.
 func New() *Server {
 	s := &Server{
 		Store: session.NewStore(),
@@ -31,14 +34,15 @@ func (s *Server) routes() {
 	s.mux.Get("/v1/speak", s.handleSpeakWS)
 }
 
+// Handler returns the HTTP handler for the server.
 func (s *Server) Handler() http.Handler {
 	return s.mux
 }
 
-func (s *Server) handleHealth(w http.ResponseWriter, r *http.Request) {
+func (s *Server) handleHealth(w http.ResponseWriter, _ *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(`{"status":"ok"}`))
+	_, _ = w.Write([]byte(`{"status":"ok"}`))
 }
 
 // handleSpeakWS is implemented in ws.go

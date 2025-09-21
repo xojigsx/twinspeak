@@ -1,7 +1,9 @@
 package session
 
+// State represents the current state of a session.
 type State int
 
+// Session states.
 const (
 	StateConnecting State = iota
 	StateConfigured

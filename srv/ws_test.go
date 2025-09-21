@@ -384,10 +384,10 @@ func TestSessionEndFlowAndCleanup(t *testing.T) {
 func TestErrorConditions(t *testing.T) {
 	tests := []struct {
 		name         string
-		setupFirst   bool
 		message      string
 		expectedCode string
 		expectedType string
+		setupFirst   bool
 	}{
 		{
 			name:         "Invalid JSON",
@@ -440,9 +440,9 @@ func TestErrorConditions(t *testing.T) {
 					Model: "gemini-1.5-flash",
 				}
 
-				data, err := json.Marshal(setupReq)
-				if err != nil {
-					t.Fatalf("Failed to marshal setup request: %v", err)
+				data, marshalErr := json.Marshal(setupReq)
+				if marshalErr != nil {
+					t.Fatalf("Failed to marshal setup request: %v", marshalErr)
 				}
 
 				err = wsutil.WriteClientMessage(conn, ws.OpText, data)

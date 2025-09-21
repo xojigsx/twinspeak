@@ -288,15 +288,15 @@ func TestStoreConcurrency(t *testing.T) {
 // TestStateString tests state string representation
 func TestStateString(t *testing.T) {
 	tests := []struct {
-		state    State
 		expected string
+		state    State
 	}{
-		{StateConnecting, "Connecting"},
-		{StateConfigured, "Configured"},
-		{StateActive, "Active"},
-		{StateClosing, "Closing"},
-		{StateClosed, "Closed"},
-		{State(999), "Unknown"}, // Invalid state
+		{"Connecting", StateConnecting},
+		{"Configured", StateConfigured},
+		{"Active", StateActive},
+		{"Closing", StateClosing},
+		{"Closed", StateClosed},
+		{"Unknown", State(999)}, // Invalid state
 	}
 
 	for _, tt := range tests {

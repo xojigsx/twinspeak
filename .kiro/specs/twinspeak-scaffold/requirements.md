@@ -2,7 +2,7 @@
 
 ## Introduction
 
-Twinspeak is a drop-in replacement for Google's Gemini Live API that provides real-time conversational AI capabilities over WebSocket connections. The system enables stateful, multi-modal communication sessions supporting text and audio input/output, function calling, and session resumption. The implementation follows a modular architecture with clear separation between API definitions, session management, and server logic, using code generation from JSON Schema for type safety and consistency.
+Twinspeak provides real-time conversational AI capabilities over WebSocket connections. The system enables stateful, multi-modal communication sessions supporting text and audio input/output, function calling, and session resumption. The implementation follows a modular architecture with clear separation between API definitions, session management, and server logic, using code generation from JSON Schema for type safety and consistency.
 
 ## Requirements
 
@@ -75,7 +75,7 @@ Twinspeak is a drop-in replacement for Google's Gemini Live API that provides re
 
 ### Requirement 6
 
-**User Story:** As a WebSocket handler, I want proper message processing with session state management, so that I can maintain protocol compliance with Gemini Live API.
+**User Story:** As a WebSocket handler, I want proper message processing with session state management, so that I can maintain protocol compliance with the WebSocket API specification.
 
 #### Acceptance Criteria
 

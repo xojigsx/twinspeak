@@ -12,7 +12,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        go-version: [1.23.x]
+        go-version: [1.25.x]
+    
+    env:
+      GOEXPERIMENT: greenteagc
 
     steps:
     - name: Check out code
@@ -36,10 +39,13 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Install dependencies
-      run: go mod download
+      run: GOEXPERIMENT=greenteagc go mod download
 
     - name: Install code generation tools
-      run: go install github.com/atombender/go-jsonschema@latest
+      run: GOEXPERIMENT=greenteagc go install github.com/atombender/go-jsonschema@latest
+
+    - name: Install formatting tools
+      run: GOEXPERIMENT=greenteagc go install golang.org/x/tools/cmd/goimports@latest
 
     - name: Build
       run: make build
@@ -53,6 +59,8 @@ jobs:
   lint:
     name: Lint
     runs-on: ubuntu-latest
+    env:
+      GOEXPERIMENT: greenteagc
     steps:
     - name: Check out code
       uses: actions/checkout@v4
@@ -62,7 +70,7 @@ jobs:
     - name: Set up Go
       uses: actions/setup-go@v5
       with:
-        go-version: 1.23.x
+        go-version: 1.25.x
 
     - name: Cache Go modules
       uses: actions/cache@v4
@@ -75,25 +83,26 @@ jobs:
           ${{ runner.os }}-go-
 
     - name: Install dependencies
-      run: go mod download
+      run: GOEXPERIMENT=greenteagc go mod download
 
     - name: Install code generation tools
-      run: go install github.com/atombender/go-jsonschema@latest
+      run: GOEXPERIMENT=greenteagc go install github.com/atombender/go-jsonschema@latest
+
+    - name: Install formatting tools
+      run: GOEXPERIMENT=greenteagc go install golang.org/x/tools/cmd/goimports@latest
 
     - name: Run basic Go linting
       run: |
-        go vet ./...
-        go fmt ./...
+        GOEXPERIMENT=greenteagc go vet ./...
+        GOEXPERIMENT=greenteagc go fmt ./...
         
-    - name: Install and run golangci-lint (if compatible)
-      run: |
-        if go version | grep -q "go1.2[0-3]"; then
-          echo "Installing golangci-lint for Go 1.20-1.23..."
-          curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.60.3
-          golangci-lint run --timeout=5m || echo "golangci-lint failed"
-        else
-          echo "Skipping golangci-lint (Go version compatibility issue)"
-        fi
+    - name: Run golangci-lint
+      uses: golangci/golangci-lint-action@v6
+      with:
+        version: latest
+        args: --timeout=5m
+      env:
+        GOEXPERIMENT: greenteagc
 
     - name: Install semgrep
       run: |
@@ -101,7 +110,7 @@ jobs:
 
     - name: Install go-ruleguard
       run: |
-        go install github.com/quasilyte/go-ruleguard/cmd/ruleguard@latest
+        GOEXPERIMENT=greenteagc go install github.com/quasilyte/go-ruleguard/cmd/ruleguard@latest
 
     - name: Run semgrep-go
       run: |

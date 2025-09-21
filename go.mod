@@ -1,6 +1,6 @@
 module jig.sx/twinspeak
 
-go 1.24
+go 1.25
 
 require (
 	github.com/atombender/go-jsonschema v0.20.0

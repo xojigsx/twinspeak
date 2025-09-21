@@ -1,0 +1,16 @@
+{
+  "enabled": true,
+  "name": "Post-Commit Lint Check",
+  "description": "Automatically runs `make lint` after each code commit to ensure all linting issues are identified and fixed, maintaining code quality standards across the repository.",
+  "version": "1",
+  "when": {
+    "type": "fileEdited",
+    "patterns": [
+      ".git/COMMIT_EDITMSG"
+    ]
+  },
+  "then": {
+    "type": "askAgent",
+    "prompt": "A commit has been made to the repository. Please run `make lint` to check for any linting issues in the codebase. If any issues are found, please fix them and ensure the code meets all quality standards. Report back on the linting results and any fixes that were applied."
+  }
+}
